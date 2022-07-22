@@ -68,6 +68,12 @@ flutter:
   assets:
     - assets/images/oshc-logo.png
     - assets/images/main-back.jpg
+    - assets/images/allianz.jpg
+    - assets/images/bupa.jpg
+    - assets/images/cbhs.jpg
+    - assets/images/medibank.jpg
+    - assets/images/nib.jpg
+    - assets/images/oshc.jpg
     - assets/svgs/cohort.svg
     - assets/svgs/cohort-colored.svg
     - assets/svgs/logo.svg

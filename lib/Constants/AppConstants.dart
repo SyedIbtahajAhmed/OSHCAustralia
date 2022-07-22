@@ -20,8 +20,10 @@ class AppConstants {
   // Colors
   static Color appLightBlueColor = const Color(0xFFf5fafe);
   static Color appBlueColor = const Color(0xFF4396c0);
+  static Color appMidBlueColor = const Color(0xFF00a1cb);
   static Color appDarkBlueColor = const Color(0xFF007acc);
   static Color appBlackColor = const Color(0xFF000000);
+  static Color appGreyColor = const Color(0xFFefefef);
   static Color appGreyTextColor = const Color(0xFF262626);
   static Color appWhiteColor = const Color(0xFFFFFFFF);
   static Color appGreenColor = const Color(0xFF28a745);
@@ -47,6 +49,7 @@ class AppConstants {
   static double appPaddingMedium = 15.0;
   static double appPaddingSmall = 10.0;
   static double appPaddingExtraSmall = 8.0;
+  static double appPaddingExtraExtraSmall = 4.0;
 
   // Bread Crumbs
   static List<String> appBreadCrumbs = [

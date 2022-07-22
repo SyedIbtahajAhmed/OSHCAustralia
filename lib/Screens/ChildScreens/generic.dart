@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../DataLayer/Providers/breadCrumbsProvider.dart';
 import '../../DataLayer/Providers/dataProvider.dart';
 import '../../UserControls/appButton.dart';
+import 'ChildComponents/providerScreen.dart';
 
 class GenericScreen extends StatefulWidget {
   const GenericScreen({Key? key}) : super(key: key);
@@ -703,7 +704,7 @@ class _GenericScreenState extends State<GenericScreen> {
                                               width: size.width*0.15,
                                               height: 40.0,
                                               decoration: BoxDecoration(
-                                                color: i <= context.read<BreadCrumbsProvider>().selected ? AppConstants.appDarkBlueColor : Colors.transparent,
+                                                color: i <= context.read<BreadCrumbsProvider>().selected ? AppConstants.appDarkBlueColor : AppConstants.appGreyColor,
                                                 borderRadius: BorderRadius.circular(5.0),
                                               ),
                                               child: Column(
@@ -726,10 +727,13 @@ class _GenericScreenState extends State<GenericScreen> {
                                                 ],
                                               ),
                                             ),
-                                            i != AppConstants.appBreadCrumbs.length-1 ? Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: i < context.read<BreadCrumbsProvider>().selected ? AppConstants.appGreenColor : AppConstants.appDarkBlueColor,
-                                              size: 20.0,
+                                            i != AppConstants.appBreadCrumbs.length-1 ? Padding(
+                                              padding: EdgeInsets.only(left: AppConstants.appPaddingSmall),
+                                              child: Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: i < context.read<BreadCrumbsProvider>().selected ? AppConstants.appGreenColor : AppConstants.appDarkBlueColor,
+                                                size: 20.0,
+                                              ),
                                             ) : Container(),
                                             i != AppConstants.appBreadCrumbs.length-1 ? Icon(
                                               Icons.arrow_forward_ios,
@@ -741,167 +745,10 @@ class _GenericScreenState extends State<GenericScreen> {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: AppConstants.appPaddingSmall,
+                                    height: AppConstants.appPaddingLarge,
                                   ),
                                   // Quote and Providers Row
-                                  Row(
-                                    children: [
-                                      // Quote Container
-                                      Container(
-                                        width: size.width*0.15,
-                                        height: size.height*0.3,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: AppConstants.appBlackColor,
-                                            width: 1.0,
-                                            style: BorderStyle.solid,
-                                          ),
-                                          borderRadius: BorderRadius.circular(5.0),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(AppConstants.appPaddingExtraSmall),
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                'Your Quote',
-                                                style: TextStyle(
-                                                  fontSize: AppConstants.appFontSizeh4,
-                                                  color: AppConstants.appGreyTextColor,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: AppConstants.appPaddingLarge,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Adults',
-                                                    style: TextStyle(
-                                                      color: AppConstants.appGreyTextColor,
-                                                      fontSize: AppConstants.appFontSizeh3,
-                                                      fontWeight: FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    context.read<DataProvider>().Data['QuoteData']['adults'] ?? '--',
-                                                    style: TextStyle(
-                                                      color: AppConstants.appGreyTextColor,
-                                                      fontSize: AppConstants.appFontSizeh3,
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: AppConstants.appPaddingSmall,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Children',
-                                                    style: TextStyle(
-                                                      color: AppConstants.appGreyTextColor,
-                                                      fontSize: AppConstants.appFontSizeh3,
-                                                      fontWeight: FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    context.read<DataProvider>().Data['QuoteData']['children'] ?? '--',
-                                                    style: TextStyle(
-                                                      color: AppConstants.appGreyTextColor,
-                                                      fontSize: AppConstants.appFontSizeh3,
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: AppConstants.appPaddingSmall,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Policy Start',
-                                                    style: TextStyle(
-                                                      color: AppConstants.appGreyTextColor,
-                                                      fontSize: AppConstants.appFontSizeh3,
-                                                      fontWeight: FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    context.read<DataProvider>().Data['QuoteData']['policyStartDate'] ?? '--',
-                                                    style: TextStyle(
-                                                      color: AppConstants.appGreyTextColor,
-                                                      fontSize: AppConstants.appFontSizeh3,
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: AppConstants.appPaddingSmall,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Policy End',
-                                                    style: TextStyle(
-                                                      color: AppConstants.appGreyTextColor,
-                                                      fontSize: AppConstants.appFontSizeh3,
-                                                      fontWeight: FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    context.read<DataProvider>().Data['QuoteData']['policyEndDate'] ?? '--',
-                                                    style: TextStyle(
-                                                      color: AppConstants.appGreyTextColor,
-                                                      fontSize: AppConstants.appFontSizeh3,
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: AppConstants.appPaddingLarge,
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment: Alignment.bottomCenter,
-                                                  child: AppButton(
-                                                    width: size.width * 0.13,
-                                                    height: 30.0,
-                                                    primaryColor:
-                                                    AppConstants.appDarkBlueColor,
-                                                    borderRadius: 5.0,
-                                                    text: 'Save Quote for Later',
-                                                    textColor:
-                                                    AppConstants.appWhiteColor,
-                                                    fontSize:
-                                                    AppConstants.appFontSizeh2,
-                                                    fontWeight: FontWeight.normal,
-                                                    onPressed: () {
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      
-                                      // Providers Container
-                                      Expanded(
-                                        child: Container(
-                                          height: size.height*0.3,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  const ProviderScreen(),
                                 ],
                               ),
                             ),
