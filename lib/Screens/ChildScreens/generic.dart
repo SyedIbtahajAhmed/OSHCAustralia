@@ -18,8 +18,10 @@ class GenericScreen extends StatefulWidget {
 }
 
 class _GenericScreenState extends State<GenericScreen> {
-  bool _value = false;
-  bool _value1 = false;
+  bool _male = false;
+  bool _female = false;
+  bool _declaration = false;
+  bool _acceptance = false;
   DateTime? _selected;
   var adultsDropdownValue;
   var childrenDropdownValue;
@@ -34,6 +36,7 @@ class _GenericScreenState extends State<GenericScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double fontsize = 13;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -808,30 +811,36 @@ class _GenericScreenState extends State<GenericScreen> {
                                   ),
                                   // Quote and Providers Row
                                   const ProviderScreen(),
-                                  // Form Container
+                                  Padding(padding: EdgeInsets.all(15)),
+                                  Container(
+                                    width: double.infinity,
+                                    child: const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Student Details',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black87),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: AppConstants.appPaddingLarge),
+                                    child: const Divider(
+                                      color: Colors.black,
+                                      thickness: 0.2,
+                                    ),
+                                  ),
+                                  // Form
                                   IntrinsicHeight(
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        const Text(
-                                          'Student Details',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black87),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom:
-                                                  AppConstants.appPaddingLarge),
-                                          child: const Divider(
-                                            color: Colors.black,
-                                            thickness: 0.2,
-                                          ),
-                                        ),
                                         SizedBox(
                                           height: 30,
                                           width: 200,
@@ -839,8 +848,8 @@ class _GenericScreenState extends State<GenericScreen> {
                                             children: <Widget>[
                                               Text(
                                                 '* Title:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
                                               ),
                                               Flexible(
                                                 child: TextField(
@@ -866,8 +875,8 @@ class _GenericScreenState extends State<GenericScreen> {
                                             children: <Widget>[
                                               Text(
                                                 '* Given Name:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
                                               ),
                                               Flexible(
                                                 child: TextField(
@@ -893,8 +902,8 @@ class _GenericScreenState extends State<GenericScreen> {
                                             children: <Widget>[
                                               Text(
                                                 '* Surname:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
                                               ),
                                               Flexible(
                                                 child: TextField(
@@ -920,8 +929,8 @@ class _GenericScreenState extends State<GenericScreen> {
                                             children: <Widget>[
                                               Text(
                                                 '* Date of Birth:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
                                               ),
                                               Flexible(
                                                 child: TextField(
@@ -972,22 +981,29 @@ class _GenericScreenState extends State<GenericScreen> {
                                         Padding(padding: EdgeInsets.all(15)),
                                         Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.center,
                                           children: <Widget>[
                                             Text(
                                               '* Gender:  ',
-                                              style: TextStyle(fontSize: 17.0),
+                                              style:
+                                                  TextStyle(fontSize: fontsize),
                                             ),
                                             Container(
                                               width: 150.0,
                                               child: CheckboxListTile(
-                                                value: _value,
+                                                checkColor: Colors.green,
+                                                activeColor: Colors.white,
+                                                value: _male,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    _value = value!;
+                                                    _male = value!;
                                                   });
                                                 },
-                                                title: Text("Male"),
+                                                title: Text("Male",
+                                                    style: TextStyle(
+                                                        fontSize: fontsize,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                                 contentPadding:
                                                     EdgeInsets.symmetric(
                                                         horizontal: 2,
@@ -997,13 +1013,701 @@ class _GenericScreenState extends State<GenericScreen> {
                                             Container(
                                               width: 150.0,
                                               child: CheckboxListTile(
-                                                value: _value1,
+                                                checkColor: Colors.green,
+                                                activeColor: Colors.white,
+                                                value: _female,
                                                 onChanged: (value1) {
                                                   setState(() {
-                                                    _value1 = value1!;
+                                                    _female = value1!;
                                                   });
                                                 },
-                                                title: Text("Female"),
+                                                title: Text("Female",
+                                                    style: TextStyle(
+                                                        fontSize: fontsize,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Home Country:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Passport Number:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Visa Class:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 300,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Eductational Institution:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: double.infinity,
+                                          child: const Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Policy Details',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Colors.black87),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  AppConstants.appPaddingLarge),
+                                          child: const Divider(
+                                            color: Colors.black,
+                                            thickness: 0.2,
+                                          ),
+                                        ),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '* Policy Starts: ',
+                                                style: TextStyle(
+                                                  color: AppConstants
+                                                      .appGreyTextColor,
+                                                  fontSize: AppConstants
+                                                      .appFontSizeh3,
+                                                ),
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.all(15)),
+                                              SizedBox(
+                                                width: 200.0,
+                                                child: TextFormField(
+                                                  onTap: () {
+                                                    _onPressed(
+                                                        context: context,
+                                                        field: 'startDate');
+                                                  },
+                                                  controller:
+                                                      _startDateController,
+                                                  textAlign: TextAlign.center,
+                                                  showCursor: false,
+                                                  style: TextStyle(
+                                                    color: AppConstants
+                                                        .appBlueColor,
+                                                    fontSize: AppConstants
+                                                        .appFontSizeh3,
+                                                  ),
+                                                  decoration: InputDecoration(
+                                                    alignLabelWithHint: true,
+                                                    hintText:
+                                                        'Select Start Date',
+                                                    hintStyle: TextStyle(
+                                                      color: AppConstants
+                                                          .appBlackColor,
+                                                      fontSize: AppConstants
+                                                          .appFontSizeh3,
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                                .fromLTRB(10.0,
+                                                            0.0, 10.0, 0.0),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: AppConstants
+                                                            .appBlackColor,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: AppConstants
+                                                            .appBlackColor,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                        Padding(padding: EdgeInsets.all(8)),
+                                        const Text(
+                                          "Your policy must start from the date you'll arrive in Australia, or the date that any previous policy ends (or is cancelled).",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '* Policy Ends: ',
+                                                style: TextStyle(
+                                                  color: AppConstants
+                                                      .appGreyTextColor,
+                                                  fontSize: AppConstants
+                                                      .appFontSizeh3,
+                                                ),
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.all(15)),
+                                              SizedBox(
+                                                width: 200.0,
+                                                child: TextFormField(
+                                                  onTap: () {
+                                                    _onPressed(
+                                                        context: context,
+                                                        field: 'endDate');
+                                                  },
+                                                  controller:
+                                                      _startDateController,
+                                                  textAlign: TextAlign.center,
+                                                  showCursor: false,
+                                                  decoration: InputDecoration(
+                                                    alignLabelWithHint: true,
+                                                    hintText: 'Select End Date',
+                                                    hintStyle: TextStyle(
+                                                      color: AppConstants
+                                                          .appBlackColor,
+                                                      fontSize: AppConstants
+                                                          .appFontSizeh3,
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                                .fromLTRB(10.0,
+                                                            0.0, 10.0, 0.0),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: AppConstants
+                                                            .appBlackColor,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: AppConstants
+                                                            .appBlackColor,
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ]),
+                                        Container(
+                                          width: double.infinity,
+                                          child: const Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Contact Details',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Colors.black87),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  AppConstants.appPaddingLarge),
+                                          child: const Divider(
+                                            color: Colors.black,
+                                            thickness: 0.2,
+                                          ),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 300,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Mobile Phone Number:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.grey,
+                                                              width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 300,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Agent email:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    hintText:
+                                                        "hussain@visionconsultants.com.au",
+                                                    border: OutlineInputBorder(
+                                                        borderSide:
+                                                            const BorderSide(
+                                                                color:
+                                                                    Colors.grey,
+                                                                width: 5.0),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(8)),
+                                        const Text(
+                                          "A copy of your certificate will be sent to your agent which will include the personal details you've entered here.",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 300,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Email:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.grey,
+                                                              width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 300,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Email confirmation:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.grey,
+                                                              width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(8)),
+                                        const Text(
+                                          "A copy of your certificate will be sent to your agent which will include the personal details you've entered here.",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontStyle: FontStyle.italic),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        Container(
+                                          width: double.infinity,
+                                          child: const Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Australian Address Details',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Colors.black87),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  AppConstants.appPaddingLarge),
+                                          child: const Divider(
+                                            color: Colors.black,
+                                            thickness: 0.2,
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(8)),
+                                        Container(
+                                          width: double.infinity,
+                                          child: const Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Leave these details blank if you don't yet have an Australian address",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Address:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 300,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Address2:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Postcode:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 300,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'Suburb:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                'State:  ',
+                                                style: TextStyle(
+                                                    fontSize: fontsize),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        Container(
+                                          width: double.infinity,
+                                          child: const Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Terms',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Colors.black87),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  AppConstants.appPaddingLarge),
+                                          child: const Divider(
+                                            color: Colors.black,
+                                            thickness: 0.2,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text(
+                                              'Declaration:  ',
+                                              style:
+                                                  TextStyle(fontSize: fontsize),
+                                            ),
+                                            Container(
+                                              width: 150.0,
+                                              child: CheckboxListTile(
+                                                checkColor: Colors.green,
+                                                activeColor: Colors.white,
+                                                value: _declaration,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _declaration = value!;
+                                                  });
+                                                },
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 2,
+                                                        vertical: 2),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text(
+                                              'Acceptance of Terms:  ',
+                                              style:
+                                                  TextStyle(fontSize: fontsize),
+                                            ),
+                                            Container(
+                                              width: 150.0,
+                                              child: CheckboxListTile(
+                                                checkColor: Colors.green,
+                                                activeColor: Colors.white,
+                                                value: _acceptance,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _acceptance = value!;
+                                                  });
+                                                },
                                                 contentPadding:
                                                     EdgeInsets.symmetric(
                                                         horizontal: 2,
@@ -1011,6 +1715,45 @@ class _GenericScreenState extends State<GenericScreen> {
                                               ),
                                             ),
                                           ],
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child: AppButton(
+                                              width: size.width * 0.2,
+                                              height: 40.0,
+                                              primaryColor:
+                                                  AppConstants.appGreenColor,
+                                              borderRadius: 5.0,
+                                              text: 'Next',
+                                              textColor:
+                                                  AppConstants.appWhiteColor,
+                                              fontSize:
+                                                  AppConstants.appFontSizeh2,
+                                              fontWeight: FontWeight.w600,
+                                              onPressed: () {
+                                                var value = {
+                                                  // 'adults':
+                                                  //     '$adultsDropdownValue',
+                                                  // 'children':
+                                                  //     '$childrenDropdownValue',
+                                                  // 'policyStartDate':
+                                                  //     _startDateController.text
+                                                  //         .trim(),
+                                                  // 'policyEndDate':
+                                                  //     _endDateController.text
+                                                  //         .trim()
+                                                };
+                                                // context
+                                                //     .read<DataProvider>()
+                                                //     .setDataOnKey(
+                                                //         'getQuoteData', value);
+                                                // Navigator.pushReplacementNamed(
+                                                //     context, '/generic');
+                                              },
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
