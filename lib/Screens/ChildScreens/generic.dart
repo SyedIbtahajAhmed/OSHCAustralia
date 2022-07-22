@@ -18,12 +18,13 @@ class GenericScreen extends StatefulWidget {
 }
 
 class _GenericScreenState extends State<GenericScreen> {
+  bool _value = false;
+  bool _value1 = false;
   DateTime? _selected;
   var adultsDropdownValue;
   var childrenDropdownValue;
   TextEditingController _startDateController = TextEditingController();
   TextEditingController _endDateController = TextEditingController();
-
 
   @override
   void initState() {
@@ -592,7 +593,7 @@ class _GenericScreenState extends State<GenericScreen> {
                                 ),
                                 Container(
                                   width: double.infinity,
-                                  height: size.height*0.45,
+                                  height: size.height * 0.45,
                                   decoration: BoxDecoration(
                                     border: Border.all(
                                       color: AppConstants.appBlackColor,
@@ -659,7 +660,8 @@ class _GenericScreenState extends State<GenericScreen> {
                                             alignment: Alignment.bottomLeft,
                                             child: AppTextButton(
                                               text: 'See how it works.',
-                                              fontSize: AppConstants.appFontSizeh3,
+                                              fontSize:
+                                                  AppConstants.appFontSizeh3,
                                               fontWeight: FontWeight.w600,
                                               textColor: Colors.blue.shade700,
                                               onPressed: () {},
@@ -694,52 +696,109 @@ class _GenericScreenState extends State<GenericScreen> {
                                 children: [
                                   // Bread Crumbs
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       // Bread Crumb
-                                      for (int i = 0; i < AppConstants.appBreadCrumbs.length; i++)
+                                      for (int i = 0;
+                                          i <
+                                              AppConstants
+                                                  .appBreadCrumbs.length;
+                                          i++)
                                         Row(
                                           children: [
                                             Container(
-                                              width: size.width*0.15,
+                                              width: size.width * 0.15,
                                               height: 40.0,
                                               decoration: BoxDecoration(
-                                                color: i <= context.read<BreadCrumbsProvider>().selected ? AppConstants.appDarkBlueColor : AppConstants.appGreyColor,
-                                                borderRadius: BorderRadius.circular(5.0),
+                                                color: i <=
+                                                        context
+                                                            .read<
+                                                                BreadCrumbsProvider>()
+                                                            .selected
+                                                    ? AppConstants
+                                                        .appDarkBlueColor
+                                                    : AppConstants.appGreyColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
-                                                    padding: EdgeInsets.only(left: AppConstants.appPaddingSmall),
+                                                    padding: EdgeInsets.only(
+                                                        left: AppConstants
+                                                            .appPaddingSmall),
                                                     child: Text(
-                                                      AppConstants.appBreadCrumbs[i],
-                                                      overflow: TextOverflow.ellipsis,
+                                                      AppConstants
+                                                          .appBreadCrumbs[i],
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       maxLines: 1,
                                                       style: TextStyle(
-                                                        color: i <= context.read<BreadCrumbsProvider>().selected ? AppConstants.appWhiteColor : AppConstants.appDarkBlueColor,
-                                                        fontSize: AppConstants.appFontSizeh3,
-                                                        fontWeight: FontWeight.w500,
+                                                        color: i <=
+                                                                context
+                                                                    .read<
+                                                                        BreadCrumbsProvider>()
+                                                                    .selected
+                                                            ? AppConstants
+                                                                .appWhiteColor
+                                                            : AppConstants
+                                                                .appDarkBlueColor,
+                                                        fontSize: AppConstants
+                                                            .appFontSizeh3,
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                       ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            i != AppConstants.appBreadCrumbs.length-1 ? Padding(
-                                              padding: EdgeInsets.only(left: AppConstants.appPaddingSmall),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: i < context.read<BreadCrumbsProvider>().selected ? AppConstants.appGreenColor : AppConstants.appDarkBlueColor,
-                                                size: 20.0,
-                                              ),
-                                            ) : Container(),
-                                            i != AppConstants.appBreadCrumbs.length-1 ? Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: i < context.read<BreadCrumbsProvider>().selected ? AppConstants.appGreenColor : AppConstants.appDarkBlueColor,
-                                              size: 20.0,
-                                            ) : Container(),
+                                            i !=
+                                                    AppConstants.appBreadCrumbs
+                                                            .length -
+                                                        1
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: AppConstants
+                                                            .appPaddingSmall),
+                                                    child: Icon(
+                                                      Icons.arrow_forward_ios,
+                                                      color: i <
+                                                              context
+                                                                  .read<
+                                                                      BreadCrumbsProvider>()
+                                                                  .selected
+                                                          ? AppConstants
+                                                              .appGreenColor
+                                                          : AppConstants
+                                                              .appDarkBlueColor,
+                                                      size: 20.0,
+                                                    ),
+                                                  )
+                                                : Container(),
+                                            i !=
+                                                    AppConstants.appBreadCrumbs
+                                                            .length -
+                                                        1
+                                                ? Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: i <
+                                                            context
+                                                                .read<
+                                                                    BreadCrumbsProvider>()
+                                                                .selected
+                                                        ? AppConstants
+                                                            .appGreenColor
+                                                        : AppConstants
+                                                            .appDarkBlueColor,
+                                                    size: 20.0,
+                                                  )
+                                                : Container(),
                                           ],
                                         ),
                                     ],
@@ -749,6 +808,382 @@ class _GenericScreenState extends State<GenericScreen> {
                                   ),
                                   // Quote and Providers Row
                                   const ProviderScreen(),
+                                  // Form Container
+                                  IntrinsicHeight(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Student Details',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Colors.black87),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  AppConstants.appPaddingLarge),
+                                          child: Divider(
+                                            color: Colors.black,
+                                            thickness: 0.2,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Title:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Given Name:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Surname:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 600,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Date of Birth:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.all(7)),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.all(7)),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 20,
+                                          width: 300,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Gender:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: CheckboxListTile(
+                                                  value: _value,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      _value = value!;
+                                                    });
+                                                  },
+                                                  title: Text("Male"),
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 2,
+                                                          vertical: 2),
+                                                ),
+                                              ),
+                                              Flexible(
+                                                child: CheckboxListTile(
+                                                  value: _value1,
+                                                  onChanged: (value1) {
+                                                    setState(() {
+                                                      _value1 = value1!;
+                                                    });
+                                                  },
+                                                  title: Text("Female"),
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 2,
+                                                          vertical: 2),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
+                                        // Copied
+                                        Container(
+                                          width: double.infinity,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Student Details',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Colors.black87),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom:
+                                                  AppConstants.appPaddingLarge),
+                                          child: Divider(
+                                            color: Colors.black,
+                                            thickness: 0.2,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Title:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Given Name:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 200,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Surname:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                        SizedBox(
+                                          height: 30,
+                                          width: 600,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text(
+                                                '* Date of Birth:  ',
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.all(7)),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.all(7)),
+                                              Flexible(
+                                                child: TextField(
+                                                    decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.grey,
+                                                          width: 5.0),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0)),
+                                                )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(padding: EdgeInsets.all(15)),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
