@@ -683,7 +683,7 @@ class _GenericScreenState extends State<GenericScreen> {
                         Expanded(
                           child: IntrinsicHeight(
                             child: Container(
-                              height: size.height * 0.9,
+                              // height: size.height * 0.9,
                               // decoration: BoxDecoration(
                               //   border: Border.all(
                               //     color: AppConstants.appBlackColor,
@@ -816,24 +816,18 @@ class _GenericScreenState extends State<GenericScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Container(
-                                          width: double.infinity,
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              'Student Details',
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w300,
-                                                  color: Colors.black87),
-                                            ),
-                                          ),
+                                        const Text(
+                                          'Student Details',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w300,
+                                              color: Colors.black87),
                                         ),
                                         Padding(
                                           padding: EdgeInsets.only(
                                               bottom:
                                                   AppConstants.appPaddingLarge),
-                                          child: Divider(
+                                          child: const Divider(
                                             color: Colors.black,
                                             thickness: 0.2,
                                           ),
@@ -976,211 +970,48 @@ class _GenericScreenState extends State<GenericScreen> {
                                           ),
                                         ),
                                         Padding(padding: EdgeInsets.all(15)),
-                                        SizedBox(
-                                          height: 20,
-                                          width: 300,
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                '* Gender:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
-                                              ),
-                                              Flexible(
-                                                child: CheckboxListTile(
-                                                  value: _value,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      _value = value!;
-                                                    });
-                                                  },
-                                                  title: Text("Male"),
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          horizontal: 2,
-                                                          vertical: 2),
-                                                ),
-                                              ),
-                                              Flexible(
-                                                child: CheckboxListTile(
-                                                  value: _value1,
-                                                  onChanged: (value1) {
-                                                    setState(() {
-                                                      _value1 = value1!;
-                                                    });
-                                                  },
-                                                  title: Text("Female"),
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          horizontal: 2,
-                                                          vertical: 2),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-
-                                        // Copied
-                                        Container(
-                                          width: double.infinity,
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              'Student Details',
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w300,
-                                                  color: Colors.black87),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              '* Gender:  ',
+                                              style: TextStyle(fontSize: 17.0),
                                             ),
-                                          ),
+                                            Container(
+                                              width: 150.0,
+                                              child: CheckboxListTile(
+                                                value: _value,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _value = value!;
+                                                  });
+                                                },
+                                                title: Text("Male"),
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 2,
+                                                        vertical: 2),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 150.0,
+                                              child: CheckboxListTile(
+                                                value: _value1,
+                                                onChanged: (value1) {
+                                                  setState(() {
+                                                    _value1 = value1!;
+                                                  });
+                                                },
+                                                title: Text("Female"),
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 2,
+                                                        vertical: 2),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom:
-                                                  AppConstants.appPaddingLarge),
-                                          child: Divider(
-                                            color: Colors.black,
-                                            thickness: 0.2,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 30,
-                                          width: 200,
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                '* Title:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
-                                              ),
-                                              Flexible(
-                                                child: TextField(
-                                                    decoration: InputDecoration(
-                                                  isDense: true,
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 5.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(15)),
-                                        SizedBox(
-                                          height: 30,
-                                          width: 200,
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                '* Given Name:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
-                                              ),
-                                              Flexible(
-                                                child: TextField(
-                                                    decoration: InputDecoration(
-                                                  isDense: true,
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 5.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(15)),
-                                        SizedBox(
-                                          height: 30,
-                                          width: 200,
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                '* Surname:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
-                                              ),
-                                              Flexible(
-                                                child: TextField(
-                                                    decoration: InputDecoration(
-                                                  isDense: true,
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 5.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(15)),
-                                        SizedBox(
-                                          height: 30,
-                                          width: 600,
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                '* Date of Birth:  ',
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
-                                              ),
-                                              Flexible(
-                                                child: TextField(
-                                                    decoration: InputDecoration(
-                                                  isDense: true,
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 5.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                )),
-                                              ),
-                                              Padding(
-                                                  padding: EdgeInsets.all(7)),
-                                              Flexible(
-                                                child: TextField(
-                                                    decoration: InputDecoration(
-                                                  isDense: true,
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 5.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                )),
-                                              ),
-                                              Padding(
-                                                  padding: EdgeInsets.all(7)),
-                                              Flexible(
-                                                child: TextField(
-                                                    decoration: InputDecoration(
-                                                  isDense: true,
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 5.0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                )),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(padding: EdgeInsets.all(15)),
                                       ],
                                     ),
                                   ),
