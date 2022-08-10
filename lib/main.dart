@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:month_year_picker/month_year_picker.dart';
@@ -7,9 +8,13 @@ import 'package:oshcaustralia/DataLayer/Providers/dataProvider.dart';
 import 'package:oshcaustralia/Screens/home.dart';
 import 'package:oshcaustralia/UserControls/RouteGenerator.dart';
 import 'package:provider/provider.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setUrlStrategy(PathUrlStrategy());
   runApp(
     MultiProvider(

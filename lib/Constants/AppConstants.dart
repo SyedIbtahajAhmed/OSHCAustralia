@@ -24,6 +24,7 @@ class AppConstants {
   static Color appDarkBlueColor = const Color(0xFF007acc);
   static Color appBlackColor = const Color(0xFF000000);
   static Color appGreyColor = const Color(0xFFefefef);
+  static Color appDarkGreyColor = const Color(0xFFdee2e6);
   static Color appGreyTextColor = const Color(0xFF262626);
   static Color appWhiteColor = const Color(0xFFFFFFFF);
   static Color appGreenColor = const Color(0xFF28a745);

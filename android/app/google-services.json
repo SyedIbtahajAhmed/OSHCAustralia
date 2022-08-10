@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "772585005702",
+    "project_id": "oshc-australia",
+    "storage_bucket": "oshc-australia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772585005702:android:85a52644e46041f8fee707",
+        "android_client_info": {
+          "package_name": "com.oshcAustralia.oshcaustralia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772585005702-ua732jq0bag8hfpsglnqe1g84e1q7san.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbM4th2M673Kl1np_HXjrNvnfl3ObKKZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772585005702-ua732jq0bag8hfpsglnqe1g84e1q7san.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "772585005702-6pffalvtfqvik3dicrdkiujn32lpgpkn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.oshcAustralia.oshcaustralia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
