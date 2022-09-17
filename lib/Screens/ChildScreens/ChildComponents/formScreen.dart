@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:oshcaustralia/DataLayer/Providers/breadCrumbsProvider.dart';
+import 'package:oshcaustralia/DataLayer/Providers/dataProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import '../../../Constants/AppConstants.dart';
 import '../../../DataLayer/Database/database.dart';
@@ -85,6 +88,17 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      DataProvider dataProvider = Provider.of<DataProvider>(context, listen: false);
+      _policyStartController.text = dataProvider.Data['QuoteData']['policyStartDate'];
+      _policyEndController.text = dataProvider.Data['QuoteData']['policyStartDate'];
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Column(
@@ -142,7 +156,7 @@ class _FormScreenState extends State<FormScreen> {
                       child: Padding(
                         padding: EdgeInsets.all(AppConstants.appPaddingSmall),
                         child: Text(
-                          "CBHS",
+                          context.read<DataProvider>().Data['SelectedProviderData']['name'],
                           style: TextStyle(
                             fontSize: AppConstants.appFontSizeh3,
                             fontWeight: FontWeight.w400,
@@ -185,7 +199,7 @@ class _FormScreenState extends State<FormScreen> {
                       child: Padding(
                         padding: EdgeInsets.all(AppConstants.appPaddingSmall),
                         child: Text(
-                          "Single",
+                          context.read<DataProvider>().Data['QuoteData']['adults'] == '1' && context.read<DataProvider>().Data['QuoteData']['children'] == '0' ? 'Single' : (context.read<DataProvider>().Data['QuoteData']['adults'] == '1' && int.parse(context.read<DataProvider>().Data['QuoteData']['children']) > 0 ? 'Single Parent' : 'Family'),
                           style: TextStyle(
                             fontSize: AppConstants.appFontSizeh3,
                             fontWeight: FontWeight.w400,
@@ -228,7 +242,7 @@ class _FormScreenState extends State<FormScreen> {
                       child: Padding(
                         padding: EdgeInsets.all(AppConstants.appPaddingSmall),
                         child: Text(
-                          "2022-09-01  -  2024-08-31",
+                          '${context.read<DataProvider>().Data['QuoteData']['policyStartDate']} - ${context.read<DataProvider>().Data['QuoteData']['policyEndDate']}',
                           style: TextStyle(
                             fontSize: AppConstants.appFontSizeh3,
                             fontWeight: FontWeight.w400,
@@ -271,7 +285,7 @@ class _FormScreenState extends State<FormScreen> {
                       child: Padding(
                         padding: EdgeInsets.all(AppConstants.appPaddingSmall),
                         child: Text(
-                          "AUD \$1,118.60",
+                          "AUD \$${context.read<DataProvider>().Data['SelectedProviderData']['amount']}",
                           style: TextStyle(
                             fontSize: AppConstants.appFontSizeh3,
                             fontWeight: FontWeight.w400,
@@ -291,7 +305,9 @@ class _FormScreenState extends State<FormScreen> {
 
         // Different Provider Button
         InkWell(
-            onTap: () {},
+            onTap: () {
+              context.read<BreadCrumbsProvider>().setSelectedBreadCrumbValue(0);
+            },
             child: Text(
               'Select a Different Provider',
               style: TextStyle(
@@ -2339,6 +2355,9 @@ class _FormScreenState extends State<FormScreen> {
                                 try {
                                   // Making The Map To Save In DB
                                   Map<String, dynamic> objectToSave = {
+                                    'Provider' : context.read<DataProvider>().Data['SelectedProviderData']['name'] ?? '',
+                                    'Cost' : context.read<DataProvider>().Data['SelectedProviderData']['amount'] ?? '',
+                                    'Category' : context.read<DataProvider>().Data['QuoteData']['adults'] == '1' && context.read<DataProvider>().Data['QuoteData']['children'] == '0' ? 'Single' : (context.read<DataProvider>().Data['QuoteData']['adults'] == '1' && int.parse(context.read<DataProvider>().Data['QuoteData']['children']) > 0 ? 'Single Parent' : 'Family'),
                                     'Title' : '$_titleDropdownValue',
                                     'Name' : _nameController.text.trim(),
                                     'Surname' : _surnameController.text.trim(),

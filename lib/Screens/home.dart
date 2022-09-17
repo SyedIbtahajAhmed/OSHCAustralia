@@ -184,13 +184,13 @@ class _HomeState extends State<Home> {
                                           });
                                         },
                                         items: <String>[
-                                          '1 Adult',
-                                          '2 Adults',
+                                          '1',
+                                          '2',
                                         ].map<DropdownMenuItem<String>>(
                                             (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
-                                            child: Text(value),
+                                            child: value == '1' ? Text('$value Adult') : Text('$value Adults'),
                                           );
                                         }).toList(),
                                       ),
@@ -256,22 +256,22 @@ class _HomeState extends State<Home> {
                                           });
                                         },
                                         items: <String>[
-                                          '0 Children',
-                                          '1 Children',
-                                          '2 Children',
-                                          '3 Children',
-                                          '4 Children',
-                                          '5 Children',
-                                          '6 Children',
-                                          '7 Children',
-                                          '8 Children',
-                                          '9 Children',
-                                          '10 Children',
+                                          '0',
+                                          '1',
+                                          '2',
+                                          '3',
+                                          '4',
+                                          '5',
+                                          '6',
+                                          '7',
+                                          '8',
+                                          '9',
+                                          '10',
                                         ].map<DropdownMenuItem<String>>(
                                             (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
-                                            child: Text(value),
+                                            child: value == '1' || value == '0' ? Text('$value child') : Text('$value children'),
                                           );
                                         }).toList(),
                                       ),
@@ -405,14 +405,28 @@ class _HomeState extends State<Home> {
                               fontSize: AppConstants.appFontSizeh7,
                               fontWeight: FontWeight.w600,
                               onPressed: () {
-                                var value = {
-                                  'adults' : '$adultsDropdownValue',
-                                  'children' : '$childrenDropdownValue',
-                                  'policyStartDate' : _startDateController.text.trim(),
-                                  'policyEndDate' : _endDateController.text.trim()
-                                };
-                                context.read<DataProvider>().setDataOnKey('QuoteData', value);
-                                Navigator.pushReplacementNamed(context, '/generic');
+                                if (adultsDropdownValue != '' && adultsDropdownValue != null && childrenDropdownValue != '' && childrenDropdownValue != null && _startDateController.text != '' && _endDateController.text != '') {
+                                  var value = {
+                                    'adults' : '$adultsDropdownValue',
+                                    'children' : '$childrenDropdownValue',
+                                    'policyStartDate' : _startDateController.text.trim(),
+                                    'policyEndDate' : _endDateController.text.trim()
+                                  };
+                                  context.read<DataProvider>().setDataOnKey('QuoteData', value);
+                                  Navigator.pushReplacementNamed(context, '/generic/provider');
+                                } else {
+                                  var snackBar = SnackBar(
+                                    content: Text(
+                                      'Please fill out the fields',
+                                      style: TextStyle(
+                                          fontSize: AppConstants.appFontSizeh5),
+                                    ),
+                                  );
+                                  if (mounted) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  }
+                                }
                               },
                             ),
                           ),

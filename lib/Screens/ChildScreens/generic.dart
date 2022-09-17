@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../DataLayer/Providers/breadCrumbsProvider.dart';
 import '../../DataLayer/Providers/dataProvider.dart';
 import '../../UserControls/appButton.dart';
+import 'Admin/adminFormScreen.dart';
 import 'ChildComponents/providerScreen.dart';
 
 class GenericScreen extends StatefulWidget {
@@ -32,6 +33,13 @@ class _GenericScreenState extends State<GenericScreen>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 4);
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   DataProvider dataProvider = Provider.of(context, listen: false);
+    //   adultsDropdownValue = dataProvider.Data['QuoteData']['adults'] == '1' ? '${dataProvider.Data['QuoteData']['adults']} adult' : '${dataProvider.Data['QuoteData']['adults']} adults';
+    //   childrenDropdownValue = dataProvider.Data['QuoteData']['children'] == '1' ? '${dataProvider.Data['QuoteData']['children']} child' : '${dataProvider.Data['QuoteData']['children']} children';
+    //   _startDateController.text = dataProvider.Data['QuoteData']['policyStartDate'];
+    //   _endDateController.text = dataProvider.Data['QuoteData']['policyEndDate'];
+    // });
   }
 
   @override
@@ -43,7 +51,7 @@ class _GenericScreenState extends State<GenericScreen>
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    double fontsize = 13;
+    var route = ModalRoute.of(context)?.settings.name;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -69,13 +77,30 @@ class _GenericScreenState extends State<GenericScreen>
           height: size.width * 0.04,
         ),
         scrolledUnderElevation: 20.0,
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 30.0,
+              horizontal: AppConstants.appPaddingMedium,
+            ),
+            child: AppButton(
+              width: 150.0,
+              height: 30.0,
+              primaryColor: AppConstants.appYellowColor,
+              borderRadius: 10.0,
+              text: 'Forms',
+              fontSize: AppConstants.appFontSizeh5,
+              fontWeight: FontWeight.w500,
+              textColor: AppConstants.appDarkBlueColor,
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/generic/admin');
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: ElevatedButton(
-        onPressed: () {
-          setState(() {
-            context.read<BreadCrumbsProvider>().incrementBreadCrumb();
-          });
-        },
+        onPressed: () {},
         style: ElevatedButton.styleFrom(
           fixedSize: const Size(80.0, 80.0),
           primary: AppConstants.appBlueColor,
@@ -97,726 +122,831 @@ class _GenericScreenState extends State<GenericScreen>
         child: Column(
           children: [
             // Body Container
-            Padding(
-              padding: EdgeInsets.all(
-                AppConstants.appPaddingLarge,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Left Side Content
-                      IntrinsicHeight(
-                        child: SizedBox(
-                          width: size.width * 0.25,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              // Your Quote Container
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: AppConstants.appPaddingSmall),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: size.height * 0.45,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: AppConstants.appBlackColor,
-                                      width: 1.0,
-                                      style: BorderStyle.solid,
-                                    ),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(
-                                        AppConstants.appPaddingSmall),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Your Quote',
-                                          style: TextStyle(
-                                            color:
-                                                AppConstants.appGreyTextColor,
-                                            fontSize:
-                                                AppConstants.appFontSizeh5,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: AppConstants.appPaddingSmall,
-                                        ),
-                                        // Form Field Row
-                                        Column(
-                                          children: [
-                                            // Adults Row
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Adults',
-                                                  style: TextStyle(
-                                                    color: AppConstants
-                                                        .appGreyTextColor,
-                                                    fontSize: AppConstants
-                                                        .appFontSizeh3,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 200.0,
-                                                  child: InputDecorator(
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .fromLTRB(
-                                                              10.0,
-                                                              0.0,
-                                                              10.0,
-                                                              0.0),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                      ),
-                                                    ),
-                                                    child:
-                                                        DropdownButtonHideUnderline(
-                                                      child: DropdownButton<
-                                                          String>(
-                                                        menuMaxHeight: 150.0,
-                                                        value:
-                                                            adultsDropdownValue,
-                                                        hint: Text(
-                                                          'Select Adults',
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          maxLines: 1,
-                                                          style: TextStyle(
-                                                            fontSize: AppConstants
-                                                                .appFontSizeh3,
-                                                            color: AppConstants
-                                                                .appBlueColor,
-                                                          ),
-                                                        ),
-                                                        icon: Icon(
-                                                          Icons.arrow_downward,
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                          size: 16.0,
-                                                        ),
-                                                        elevation: 12,
-                                                        style: TextStyle(
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                        ),
-                                                        dropdownColor:
-                                                            AppConstants
-                                                                .appWhiteColor,
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          setState(() {
-                                                            adultsDropdownValue =
-                                                                newValue!;
-                                                          });
-                                                        },
-                                                        items: <String>[
-                                                          '1 Adult',
-                                                          '2 Adults',
-                                                        ].map<
-                                                            DropdownMenuItem<
-                                                                String>>((String
-                                                            value) {
-                                                          return DropdownMenuItem<
-                                                              String>(
-                                                            value: value,
-                                                            child: Text(value),
-                                                          );
-                                                        }).toList(),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height:
-                                                  AppConstants.appPaddingSmall,
-                                            ),
-                                            // Children Row
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Children',
-                                                  style: TextStyle(
-                                                    color: AppConstants
-                                                        .appGreyTextColor,
-                                                    fontSize: AppConstants
-                                                        .appFontSizeh3,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 200.0,
-                                                  child: InputDecorator(
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .fromLTRB(
-                                                              10.0,
-                                                              0.0,
-                                                              10.0,
-                                                              0.0),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                      ),
-                                                    ),
-                                                    child:
-                                                        DropdownButtonHideUnderline(
-                                                      child: DropdownButton<
-                                                          String>(
-                                                        menuMaxHeight: 150.0,
-                                                        value:
-                                                            childrenDropdownValue,
-                                                        hint: Text(
-                                                          'Select Children',
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          maxLines: 1,
-                                                          style: TextStyle(
-                                                            fontSize: AppConstants
-                                                                .appFontSizeh3,
-                                                            color: AppConstants
-                                                                .appBlueColor,
-                                                          ),
-                                                        ),
-                                                        icon: Icon(
-                                                          Icons.arrow_downward,
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                          size: 16.0,
-                                                        ),
-                                                        elevation: 12,
-                                                        style: TextStyle(
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                        ),
-                                                        dropdownColor:
-                                                            AppConstants
-                                                                .appWhiteColor,
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          setState(() {
-                                                            childrenDropdownValue =
-                                                                newValue!;
-                                                          });
-                                                        },
-                                                        items: <String>[
-                                                          '0 Children',
-                                                          '1 Children',
-                                                          '2 Children',
-                                                          '3 Children',
-                                                          '4 Children',
-                                                          '5 Children',
-                                                          '6 Children',
-                                                          '7 Children',
-                                                          '8 Children',
-                                                          '9 Children',
-                                                          '10 Children',
-                                                        ].map<
-                                                            DropdownMenuItem<
-                                                                String>>((String
-                                                            value) {
-                                                          return DropdownMenuItem<
-                                                              String>(
-                                                            value: value,
-                                                            child: Text(value),
-                                                          );
-                                                        }).toList(),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height:
-                                                  AppConstants.appPaddingSmall,
-                                            ),
-                                            // Start Date Row
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'My policy starts on',
-                                                  style: TextStyle(
-                                                    color: AppConstants
-                                                        .appGreyTextColor,
-                                                    fontSize: AppConstants
-                                                        .appFontSizeh3,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 200.0,
-                                                  child: TextFormField(
-                                                    onTap: () {
-                                                      _onPressed(
-                                                          context: context,
-                                                          field: 'startDate');
-                                                    },
-                                                    controller:
-                                                        _startDateController,
-                                                    textAlign: TextAlign.center,
-                                                    showCursor: false,
-                                                    style: TextStyle(
-                                                      color: AppConstants
-                                                          .appBlueColor,
-                                                      fontSize: AppConstants
-                                                          .appFontSizeh3,
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      alignLabelWithHint: true,
-                                                      hintText:
-                                                          'Select Start Date',
-                                                      hintStyle: TextStyle(
-                                                        color: AppConstants
-                                                            .appBlueColor,
-                                                        fontSize: AppConstants
-                                                            .appFontSizeh3,
-                                                      ),
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .fromLTRB(
-                                                              10.0,
-                                                              0.0,
-                                                              10.0,
-                                                              0.0),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height:
-                                                  AppConstants.appPaddingSmall,
-                                            ),
-                                            // End Date Row
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'My policy finishes on',
-                                                  style: TextStyle(
-                                                    color: AppConstants
-                                                        .appGreyTextColor,
-                                                    fontSize: AppConstants
-                                                        .appFontSizeh3,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 200.0,
-                                                  child: TextFormField(
-                                                    controller:
-                                                        _endDateController,
-                                                    textAlign: TextAlign.center,
-                                                    onTap: () {
-                                                      _onPressed(
-                                                          context: context,
-                                                          field: 'endDate');
-                                                    },
-                                                    showCursor: false,
-                                                    style: TextStyle(
-                                                      color: AppConstants
-                                                          .appBlueColor,
-                                                      fontSize: AppConstants
-                                                          .appFontSizeh3,
-                                                    ),
-                                                    decoration: InputDecoration(
-                                                      alignLabelWithHint: true,
-                                                      hintText:
-                                                          'Select End Date',
-                                                      hintStyle: TextStyle(
-                                                        color: AppConstants
-                                                            .appBlueColor,
-                                                        fontSize: AppConstants
-                                                            .appFontSizeh3,
-                                                      ),
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .fromLTRB(
-                                                              10.0,
-                                                              0.0,
-                                                              10.0,
-                                                              0.0),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                          width: 1.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: AppConstants
-                                                              .appBlueColor,
-                                                          width: 1.5,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        // Button
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: AppButton(
-                                              width: size.width * 0.2,
-                                              height: 40.0,
-                                              primaryColor:
-                                                  AppConstants.appBlueColor,
-                                              borderRadius: 5.0,
-                                              text: 'Update Quote',
-                                              textColor:
-                                                  AppConstants.appWhiteColor,
-                                              fontSize:
-                                                  AppConstants.appFontSizeh2,
-                                              fontWeight: FontWeight.w600,
-                                              onPressed: () {
-                                                var value = {
-                                                  'adults':
-                                                      '$adultsDropdownValue',
-                                                  'children':
-                                                      '$childrenDropdownValue',
-                                                  'policyStartDate':
-                                                      _startDateController.text
-                                                          .trim(),
-                                                  'policyEndDate':
-                                                      _endDateController.text
-                                                          .trim()
-                                                };
-                                                context
-                                                    .read<DataProvider>()
-                                                    .setDataOnKey(
-                                                        'getQuoteData', value);
-                                                Navigator.pushReplacementNamed(
-                                                    context, '/generic');
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                height: size.height * 0.45,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppConstants.appBlackColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(
-                                      AppConstants.appPaddingSmall),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Save Even More',
-                                        style: TextStyle(
-                                          color: AppConstants.appGreyTextColor,
-                                          fontSize: AppConstants.appFontSizeh5,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: AppConstants.appPaddingSmall,
-                                      ),
-                                      Text(
-                                        'Pay with Cohort Go.',
-                                        style: TextStyle(
-                                          color: AppConstants.appGreyTextColor,
-                                          fontSize: AppConstants.appFontSizeh3,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: AppConstants.appPaddingSmall,
-                                      ),
-                                      SvgPicture.asset(
-                                        'assets/svgs/cohort-payment.svg',
-                                        height: size.width * 0.06,
-                                        theme: null,
-                                      ),
-                                      SizedBox(
-                                        height: AppConstants.appPaddingSmall,
-                                      ),
-                                      Text(
-                                        'Pay your OSHC, tuition, and other study related expenses with Cohort Go to save even more on your policy with competitive foreign exchange rates, multiple payments in the one transaction, and no fees!',
-                                        textAlign: TextAlign.justify,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 4,
-                                        style: TextStyle(
-                                          color: AppConstants.appGreyTextColor,
-                                          fontSize: AppConstants.appFontSizeh3,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: AppTextButton(
-                                            text: 'See how it works.',
-                                            fontSize:
-                                                AppConstants.appFontSizeh3,
-                                            fontWeight: FontWeight.w600,
-                                            textColor: Colors.blue.shade700,
-                                            onPressed: () {},
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: AppConstants.appPaddingExtraSmall,
-                      ),
-                      // Right Side Content
-                      Expanded(
-                        child: Column(
+            route == '/generic/provider'
+                ? Padding(
+                    padding: EdgeInsets.all(
+                      AppConstants.appPaddingLarge,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Bread Crumbs
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Bread Crumb
-                                for (int i = 0;
-                                    i < AppConstants.appBreadCrumbs.length;
-                                    i++)
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: size.width * 0.15,
-                                        height: 40.0,
+                            // Left Side Content
+                            IntrinsicHeight(
+                              child: SizedBox(
+                                width: size.width * 0.25,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // Your Quote Container
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: AppConstants.appPaddingSmall),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: size.height * 0.45,
                                         decoration: BoxDecoration(
-                                          color: i <=
-                                                  context
-                                                      .read<
-                                                          BreadCrumbsProvider>()
-                                                      .selected
-                                              ? AppConstants.appDarkBlueColor
-                                              : AppConstants.appGreyColor,
+                                          border: Border.all(
+                                            color: AppConstants.appBlackColor,
+                                            width: 1.0,
+                                            style: BorderStyle.solid,
+                                          ),
                                           borderRadius:
                                               BorderRadius.circular(5.0),
                                         ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(
+                                              AppConstants.appPaddingSmall),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Your Quote',
+                                                style: TextStyle(
+                                                  color: AppConstants
+                                                      .appGreyTextColor,
+                                                  fontSize: AppConstants
+                                                      .appFontSizeh5,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: AppConstants
+                                                    .appPaddingSmall,
+                                              ),
+                                              // Form Field Row
+                                              Column(
+                                                children: [
+                                                  // Adults Row
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Adults',
+                                                        style: TextStyle(
+                                                          color: AppConstants
+                                                              .appGreyTextColor,
+                                                          fontSize: AppConstants
+                                                              .appFontSizeh3,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 200.0,
+                                                        child: InputDecorator(
+                                                          decoration:
+                                                              InputDecoration(
+                                                            contentPadding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    10.0,
+                                                                    0.0),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0),
+                                                            ),
+                                                          ),
+                                                          child:
+                                                              DropdownButtonHideUnderline(
+                                                            child:
+                                                                DropdownButton<
+                                                                    String>(
+                                                              menuMaxHeight:
+                                                                  150.0,
+                                                              value:
+                                                                  adultsDropdownValue,
+                                                              hint: Text(
+                                                                'Select Adults',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                maxLines: 1,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      AppConstants
+                                                                          .appFontSizeh3,
+                                                                  color: AppConstants
+                                                                      .appBlueColor,
+                                                                ),
+                                                              ),
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .arrow_downward,
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                                size: 16.0,
+                                                              ),
+                                                              elevation: 12,
+                                                              style: TextStyle(
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                              ),
+                                                              dropdownColor:
+                                                                  AppConstants
+                                                                      .appWhiteColor,
+                                                              onChanged: (String?
+                                                                  newValue) {
+                                                                setState(() {
+                                                                  adultsDropdownValue =
+                                                                      newValue!;
+                                                                });
+                                                              },
+                                                              items: <String>[
+                                                                '1',
+                                                                '2',
+                                                              ].map<
+                                                                  DropdownMenuItem<
+                                                                      String>>((String
+                                                                  value) {
+                                                                return DropdownMenuItem<
+                                                                    String>(
+                                                                  value: value,
+                                                                  child: value ==
+                                                                          '1'
+                                                                      ? Text(
+                                                                          '$value Adult')
+                                                                      : Text(
+                                                                          '$value Adults'),
+                                                                );
+                                                              }).toList(),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: AppConstants
+                                                        .appPaddingSmall,
+                                                  ),
+                                                  // Children Row
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Children',
+                                                        style: TextStyle(
+                                                          color: AppConstants
+                                                              .appGreyTextColor,
+                                                          fontSize: AppConstants
+                                                              .appFontSizeh3,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 200.0,
+                                                        child: InputDecorator(
+                                                          decoration:
+                                                              InputDecoration(
+                                                            contentPadding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    10.0,
+                                                                    0.0),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0),
+                                                            ),
+                                                          ),
+                                                          child:
+                                                              DropdownButtonHideUnderline(
+                                                            child:
+                                                                DropdownButton<
+                                                                    String>(
+                                                              menuMaxHeight:
+                                                                  150.0,
+                                                              value:
+                                                                  childrenDropdownValue,
+                                                              hint: Text(
+                                                                'Select Children',
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                maxLines: 1,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      AppConstants
+                                                                          .appFontSizeh3,
+                                                                  color: AppConstants
+                                                                      .appBlueColor,
+                                                                ),
+                                                              ),
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .arrow_downward,
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                                size: 16.0,
+                                                              ),
+                                                              elevation: 12,
+                                                              style: TextStyle(
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                              ),
+                                                              dropdownColor:
+                                                                  AppConstants
+                                                                      .appWhiteColor,
+                                                              onChanged: (String?
+                                                                  newValue) {
+                                                                setState(() {
+                                                                  childrenDropdownValue =
+                                                                      newValue!;
+                                                                });
+                                                              },
+                                                              items: <String>[
+                                                                '0',
+                                                                '1',
+                                                                '2',
+                                                                '3',
+                                                                '4',
+                                                                '5',
+                                                                '6',
+                                                                '7',
+                                                                '8',
+                                                                '9',
+                                                                '10',
+                                                              ].map<
+                                                                  DropdownMenuItem<
+                                                                      String>>((String
+                                                                  value) {
+                                                                return DropdownMenuItem<
+                                                                    String>(
+                                                                  value: value,
+                                                                  child: value ==
+                                                                              '1' ||
+                                                                          value ==
+                                                                              '0'
+                                                                      ? Text(
+                                                                          '$value child')
+                                                                      : Text(
+                                                                          '$value children'),
+                                                                );
+                                                              }).toList(),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: AppConstants
+                                                        .appPaddingSmall,
+                                                  ),
+                                                  // Start Date Row
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'My policy starts on',
+                                                        style: TextStyle(
+                                                          color: AppConstants
+                                                              .appGreyTextColor,
+                                                          fontSize: AppConstants
+                                                              .appFontSizeh3,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 200.0,
+                                                        child: TextFormField(
+                                                          onTap: () {
+                                                            _onPressed(
+                                                                context:
+                                                                    context,
+                                                                field:
+                                                                    'startDate');
+                                                          },
+                                                          controller:
+                                                              _startDateController,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          showCursor: false,
+                                                          style: TextStyle(
+                                                            color: AppConstants
+                                                                .appBlueColor,
+                                                            fontSize: AppConstants
+                                                                .appFontSizeh3,
+                                                          ),
+                                                          decoration:
+                                                              InputDecoration(
+                                                            alignLabelWithHint:
+                                                                true,
+                                                            hintText:
+                                                                'Select Start Date',
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              color: AppConstants
+                                                                  .appBlueColor,
+                                                              fontSize: AppConstants
+                                                                  .appFontSizeh3,
+                                                            ),
+                                                            contentPadding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    10.0,
+                                                                    0.0),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: AppConstants
+                                                        .appPaddingSmall,
+                                                  ),
+                                                  // End Date Row
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'My policy finishes on',
+                                                        style: TextStyle(
+                                                          color: AppConstants
+                                                              .appGreyTextColor,
+                                                          fontSize: AppConstants
+                                                              .appFontSizeh3,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 200.0,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              _endDateController,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          onTap: () {
+                                                            _onPressed(
+                                                                context:
+                                                                    context,
+                                                                field:
+                                                                    'endDate');
+                                                          },
+                                                          showCursor: false,
+                                                          style: TextStyle(
+                                                            color: AppConstants
+                                                                .appBlueColor,
+                                                            fontSize: AppConstants
+                                                                .appFontSizeh3,
+                                                          ),
+                                                          decoration:
+                                                              InputDecoration(
+                                                            alignLabelWithHint:
+                                                                true,
+                                                            hintText:
+                                                                'Select End Date',
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              color: AppConstants
+                                                                  .appBlueColor,
+                                                              fontSize: AppConstants
+                                                                  .appFontSizeh3,
+                                                            ),
+                                                            contentPadding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    10.0,
+                                                                    0.0),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: AppConstants
+                                                                    .appBlueColor,
+                                                                width: 1.5,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                              // Button
+                                              Expanded(
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.bottomCenter,
+                                                  child: AppButton(
+                                                    width: size.width * 0.2,
+                                                    height: 40.0,
+                                                    primaryColor: AppConstants
+                                                        .appBlueColor,
+                                                    borderRadius: 5.0,
+                                                    text: 'Update Quote',
+                                                    textColor: AppConstants
+                                                        .appWhiteColor,
+                                                    fontSize: AppConstants
+                                                        .appFontSizeh2,
+                                                    fontWeight: FontWeight.w600,
+                                                    onPressed: () {
+                                                      var value = {
+                                                        'adults':
+                                                            '$adultsDropdownValue',
+                                                        'children':
+                                                            '$childrenDropdownValue',
+                                                        'policyStartDate':
+                                                            _startDateController
+                                                                .text
+                                                                .trim(),
+                                                        'policyEndDate':
+                                                            _endDateController
+                                                                .text
+                                                                .trim()
+                                                      };
+                                                      context
+                                                          .read<DataProvider>()
+                                                          .setDataOnKey(
+                                                              'QuoteData',
+                                                              value);
+                                                      Navigator
+                                                          .pushReplacementNamed(
+                                                              context,
+                                                              '/generic');
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: size.height * 0.45,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppConstants.appBlackColor,
+                                          width: 1.0,
+                                          style: BorderStyle.solid,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(
+                                            AppConstants.appPaddingSmall),
                                         child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                              MainAxisAlignment.start,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: AppConstants
-                                                      .appPaddingSmall),
-                                              child: Text(
-                                                AppConstants.appBreadCrumbs[i],
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                                style: TextStyle(
-                                                  color: i <=
-                                                          context
-                                                              .read<
-                                                                  BreadCrumbsProvider>()
-                                                              .selected
-                                                      ? AppConstants
-                                                          .appWhiteColor
-                                                      : AppConstants
-                                                          .appDarkBlueColor,
-                                                  fontSize: AppConstants
-                                                      .appFontSizeh3,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                            Text(
+                                              'Save Even More',
+                                              style: TextStyle(
+                                                color: AppConstants
+                                                    .appGreyTextColor,
+                                                fontSize:
+                                                    AppConstants.appFontSizeh5,
                                               ),
                                             ),
+                                            SizedBox(
+                                              height:
+                                                  AppConstants.appPaddingSmall,
+                                            ),
+                                            Text(
+                                              'Pay with Cohort Go.',
+                                              style: TextStyle(
+                                                color: AppConstants
+                                                    .appGreyTextColor,
+                                                fontSize:
+                                                    AppConstants.appFontSizeh3,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height:
+                                                  AppConstants.appPaddingSmall,
+                                            ),
+                                            SvgPicture.asset(
+                                              'assets/svgs/cohort-payment.svg',
+                                              height: size.width * 0.06,
+                                              theme: null,
+                                            ),
+                                            SizedBox(
+                                              height:
+                                                  AppConstants.appPaddingSmall,
+                                            ),
+                                            Text(
+                                              'Pay your OSHC, tuition, and other study related expenses with Cohort Go to save even more on your policy with competitive foreign exchange rates, multiple payments in the one transaction, and no fees!',
+                                              textAlign: TextAlign.justify,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 4,
+                                              style: TextStyle(
+                                                color: AppConstants
+                                                    .appGreyTextColor,
+                                                fontSize:
+                                                    AppConstants.appFontSizeh3,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.bottomLeft,
+                                                child: AppTextButton(
+                                                  text: 'See how it works.',
+                                                  fontSize: AppConstants
+                                                      .appFontSizeh3,
+                                                  fontWeight: FontWeight.w600,
+                                                  textColor:
+                                                      Colors.blue.shade700,
+                                                  onPressed: () {},
+                                                ),
+                                              ),
+                                            )
                                           ],
                                         ),
                                       ),
-                                      i !=
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: AppConstants.appPaddingExtraSmall,
+                            ),
+                            // Right Side Content
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  // Bread Crumbs
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Bread Crumb
+                                      for (int i = 0;
+                                          i <
                                               AppConstants
-                                                      .appBreadCrumbs.length -
-                                                  1
-                                          ? Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: AppConstants
-                                                      .appPaddingSmall),
-                                              child: Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: i <
+                                                  .appBreadCrumbs.length;
+                                          i++)
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: size.width * 0.15,
+                                              height: 40.0,
+                                              decoration: BoxDecoration(
+                                                color: i <=
                                                         context
                                                             .read<
                                                                 BreadCrumbsProvider>()
                                                             .selected
-                                                    ? AppConstants.appGreenColor
-                                                    : AppConstants
-                                                        .appDarkBlueColor,
-                                                size: 20.0,
+                                                    ? AppConstants
+                                                        .appDarkBlueColor
+                                                    : AppConstants.appGreyColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
                                               ),
-                                            )
-                                          : Container(),
-                                      i !=
-                                              AppConstants
-                                                      .appBreadCrumbs.length -
-                                                  1
-                                          ? Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: i <
-                                                      context
-                                                          .read<
-                                                              BreadCrumbsProvider>()
-                                                          .selected
-                                                  ? AppConstants.appGreenColor
-                                                  : AppConstants
-                                                      .appDarkBlueColor,
-                                              size: 20.0,
-                                            )
-                                          : Container(),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: AppConstants
+                                                            .appPaddingSmall),
+                                                    child: Text(
+                                                      AppConstants
+                                                          .appBreadCrumbs[i],
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      style: TextStyle(
+                                                        color: i <=
+                                                                context
+                                                                    .read<
+                                                                        BreadCrumbsProvider>()
+                                                                    .selected
+                                                            ? AppConstants
+                                                                .appWhiteColor
+                                                            : AppConstants
+                                                                .appDarkBlueColor,
+                                                        fontSize: AppConstants
+                                                            .appFontSizeh3,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            i !=
+                                                    AppConstants.appBreadCrumbs
+                                                            .length -
+                                                        1
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: AppConstants
+                                                            .appPaddingSmall),
+                                                    child: Icon(
+                                                      Icons.arrow_forward_ios,
+                                                      color: i <
+                                                              context
+                                                                  .read<
+                                                                      BreadCrumbsProvider>()
+                                                                  .selected
+                                                          ? AppConstants
+                                                              .appGreenColor
+                                                          : AppConstants
+                                                              .appDarkBlueColor,
+                                                      size: 20.0,
+                                                    ),
+                                                  )
+                                                : Container(),
+                                            i !=
+                                                    AppConstants.appBreadCrumbs
+                                                            .length -
+                                                        1
+                                                ? Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: i <
+                                                            context
+                                                                .read<
+                                                                    BreadCrumbsProvider>()
+                                                                .selected
+                                                        ? AppConstants
+                                                            .appGreenColor
+                                                        : AppConstants
+                                                            .appDarkBlueColor,
+                                                    size: 20.0,
+                                                  )
+                                                : Container(),
+                                          ],
+                                        ),
                                     ],
                                   ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: AppConstants.appPaddingLarge,
-                            ),
-                            // Quote and Providers Row
-                            context.read<BreadCrumbsProvider>().selected == 0
-                                ? TweenAnimationBuilder(
-                                    tween: Tween<double>(begin: 0.0, end: 1.0),
-                                    duration: const Duration(milliseconds: 500),
-                                    builder: (BuildContext context,
-                                        double value, _) {
-                                      return AnimatedOpacity(
-                                        opacity: value,
-                                        duration:
-                                            const Duration(milliseconds: 500),
-                                        child: TweenAnimationBuilder(
-                                          tween: Tween<double>(begin: 1.0, end: 0.0),
-                                          duration: const Duration(milliseconds: 500),
-                                          builder: (BuildContext context, double innerValue, _) {
-                                            return Transform.translate(
-                                              offset: Offset(0.0, 500.0 * innerValue),
-                                              child: const ProviderScreen(),
+                                  SizedBox(
+                                    height: AppConstants.appPaddingLarge,
+                                  ),
+                                  // Quote and Providers Row
+                                  context
+                                              .watch<BreadCrumbsProvider>()
+                                              .selected ==
+                                          0
+                                      ? TweenAnimationBuilder(
+                                          tween: Tween<double>(
+                                              begin: 0.0, end: 1.0),
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          builder: (BuildContext context,
+                                              double value, _) {
+                                            return AnimatedOpacity(
+                                              opacity: value,
+                                              duration: const Duration(
+                                                  milliseconds: 500),
+                                              child: TweenAnimationBuilder(
+                                                tween: Tween<double>(
+                                                    begin: 1.0, end: 0.0),
+                                                duration: const Duration(
+                                                    milliseconds: 500),
+                                                builder: (BuildContext context,
+                                                    double innerValue, _) {
+                                                  return Transform.translate(
+                                                    offset: Offset(0.0,
+                                                        500.0 * innerValue),
+                                                    child:
+                                                        const ProviderScreen(),
+                                                  );
+                                                },
+                                              ),
                                             );
                                           },
-                                        ),
-                                      );
-                                    },
-                                  )
-                                : Container(),
+                                        )
+                                      : Container(),
 
-                            // Form Screen
-                            context.read<BreadCrumbsProvider>().selected == 1
-                                ? TweenAnimationBuilder(
-                              tween: Tween<double>(begin: 0.0, end: 1.0),
-                              duration: const Duration(milliseconds: 500),
-                              builder: (BuildContext context,
-                                  double value, _) {
-                                return AnimatedOpacity(
-                                  opacity: value,
-                                  duration:
-                                  const Duration(milliseconds: 500),
-                                  child: TweenAnimationBuilder(
-                                    tween: Tween<double>(begin: 1.0, end: 0.0),
-                                    duration: const Duration(milliseconds: 500),
-                                    builder: (BuildContext context, double innerValue, _) {
-                                      return Transform.translate(
-                                        offset: Offset(0.0, 500.0 * innerValue),
-                                        child: const FormScreen(),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            )
-                                : Container(),
+                                  // Form Screen
+                                  context
+                                              .watch<BreadCrumbsProvider>()
+                                              .selected ==
+                                          1
+                                      ? TweenAnimationBuilder(
+                                          tween: Tween<double>(
+                                              begin: 0.0, end: 1.0),
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          builder: (BuildContext context,
+                                              double value, _) {
+                                            return AnimatedOpacity(
+                                              opacity: value,
+                                              duration: const Duration(
+                                                  milliseconds: 500),
+                                              child: TweenAnimationBuilder(
+                                                tween: Tween<double>(
+                                                    begin: 1.0, end: 0.0),
+                                                duration: const Duration(
+                                                    milliseconds: 500),
+                                                builder: (BuildContext context,
+                                                    double innerValue, _) {
+                                                  return Transform.translate(
+                                                    offset: Offset(0.0,
+                                                        500.0 * innerValue),
+                                                    child: const FormScreen(),
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.all(
+                      AppConstants.appPaddingLarge,
+                    ),
+                    child: const AdminFormScreen(),
                   ),
-                ],
-              ),
-            ),
 
             // Website Footer
             IntrinsicHeight(

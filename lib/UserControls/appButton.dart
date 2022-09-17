@@ -43,6 +43,7 @@ class AppButton extends StatelessWidget {
         overflow: TextOverflow.fade,
         maxLines: 1,
         style: TextStyle(
+          color: textColor,
           fontSize: fontSize,
           fontWeight: fontWeight,
           letterSpacing: 1.5,

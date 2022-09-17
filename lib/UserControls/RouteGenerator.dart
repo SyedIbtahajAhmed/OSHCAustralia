@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:oshcaustralia/Screens/ChildScreens/generic.dart';
 import 'package:oshcaustralia/Screens/home.dart';
 
+import '../Screens/ChildScreens/Admin/adminFormScreen.dart';
+
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     final args = routeSettings.arguments;
@@ -13,7 +15,9 @@ class RouteGenerator {
         return MaterialPageRoute(settings: routeSettings, builder: (context) => const Home());
       case '/home':
         return MaterialPageRoute(settings: routeSettings, builder: (context) => const Home());
-      case '/generic':
+      case '/generic/provider':
+        return MaterialPageRoute(settings: routeSettings, builder: (context) => const GenericScreen());
+      case '/generic/admin':
         return MaterialPageRoute(settings: routeSettings, builder: (context) => const GenericScreen());
       default:
         return MaterialPageRoute(settings: routeSettings, builder: (context) => const Home());

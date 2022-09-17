@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:month_year_picker/month_year_picker.dart';
+import 'package:oshcaustralia/Configuration/configure_non_web.dart' if (dart.library.html) 'package:oshcaustralia/Configuration/configure_non_web.dart';
 import 'package:oshcaustralia/Constants/AppConstants.dart';
 import 'package:oshcaustralia/DataLayer/Providers/breadCrumbsProvider.dart';
 import 'package:oshcaustralia/DataLayer/Providers/dataProvider.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  configureApp();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

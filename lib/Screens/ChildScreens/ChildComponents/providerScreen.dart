@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../../../Constants/AppConstants.dart';
 import '../../../DataLayer/Data.dart';
+import '../../../DataLayer/Database/database.dart';
+import '../../../DataLayer/Providers/breadCrumbsProvider.dart';
 import '../../../DataLayer/Providers/dataProvider.dart';
 import '../../../UserControls/appButton.dart';
 
@@ -37,7 +39,11 @@ class _ProviderScreenState extends State<ProviderScreen> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(AppConstants.appPaddingExtraSmall, AppConstants.appPaddingExtraSmall, 0.0, AppConstants.appPaddingExtraSmall),
+                  padding: EdgeInsets.fromLTRB(
+                      AppConstants.appPaddingExtraSmall,
+                      AppConstants.appPaddingExtraSmall,
+                      0.0,
+                      AppConstants.appPaddingExtraSmall),
                   child: Column(
                     children: [
                       Text(
@@ -62,9 +68,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             ),
                           ),
                           Text(
-                            context.read<DataProvider>().Data['QuoteData']
-                                    ['adults'] ??
-                                '--',
+                            context.read<DataProvider>().Data['QuoteData']['adults'] == '1' ? '${context.read<DataProvider>().Data['QuoteData']['adults']} adult' : '${context.read<DataProvider>().Data['QuoteData']['adults']} adults',
                             style: TextStyle(
                               color: AppConstants.appGreyTextColor,
                               fontSize: AppConstants.appFontSizeh3,
@@ -88,9 +92,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             ),
                           ),
                           Text(
-                            context.read<DataProvider>().Data['QuoteData']
-                                    ['children'] ??
-                                '--',
+                            context.read<DataProvider>().Data['QuoteData']['children'] == '1' ? '${context.read<DataProvider>().Data['QuoteData']['children']} child' : '${context.read<DataProvider>().Data['QuoteData']['children']} children',
                             style: TextStyle(
                               color: AppConstants.appGreyTextColor,
                               fontSize: AppConstants.appFontSizeh3,
@@ -180,76 +182,125 @@ class _ProviderScreenState extends State<ProviderScreen> {
                 child: Container(
                   height: size.height * 0.27,
                   // color: Colors.red,
-                  padding: EdgeInsets.fromLTRB(AppConstants.appPaddingSmall, 0.0,
-                      0.0, 0.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (int i = 0; i < Data.providerImages.length; i++)
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            // Provider Image Container
-                            Container(
-                              width: 140.0,
-                              height: 80.0,
-                              child: Center(
-                                child: Image(
-                                  image:
-                                      AssetImage(Data.providerImages[i]['image']),
-                                  width: 120.0,
-                                ),
-                              ),
-                            ),
-                            // Price And Button Container
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  height: size.height * 0.14,
-                                  color: AppConstants.appGreyColor,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 140.0,
-                                        // height: 80.0,
-                                        child: Text(
-                                          Data.providerImages[i]['price'],
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: AppConstants.appFontSizeh7,
-                                            fontWeight: FontWeight.w500,
+                  padding: EdgeInsets.fromLTRB(
+                      AppConstants.appPaddingSmall, 0.0, 0.0, 0.0),
+
+                  child: StreamBuilder<Map<String, double>>(
+                    stream: Database.getQuotes(
+                        context,
+                        context.read<DataProvider>().Data['QuoteData']
+                                ['adults'] ??
+                            '1',
+                        context.read<DataProvider>().Data['QuoteData']
+                                ['children'] ??
+                            '0'),
+                    // context.read<DataProvider>().Data['QuoteData']['adults'],
+                    // context.read<DataProvider>().Data['QuoteData']
+                    //     ['children']),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Map<String, double>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      } else {
+                        if (!snapshot.hasError) {
+                          Map<String, double> data = snapshot.data!;
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (String key in data.keys)
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    // Provider Image Container
+                                    Container(
+                                      width: 140.0,
+                                      height: 80.0,
+                                      child: Center(
+                                        child: Image(
+                                          image: AssetImage(
+                                              "assets/images/$key.jpg"),
+                                          width: 120.0,
+                                        ),
+                                      ),
+                                    ),
+                                    // Price And Button Container
+                                    Expanded(
+                                      child: Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Container(
+                                          height: size.height * 0.14,
+                                          color: AppConstants.appGreyColor,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: 140.0,
+                                                // height: 80.0,
+                                                child: Text(
+                                                  '\$${data[key]!.toStringAsFixed(2)}',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: AppConstants
+                                                        .appFontSizeh7,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: AppConstants
+                                                    .appPaddingSmall,
+                                              ),
+                                              AppButton(
+                                                width: 100.0,
+                                                height: 50.0,
+                                                primaryColor:
+                                                    AppConstants.appGreenColor,
+                                                borderRadius: 5.0,
+                                                text: 'Buy Now',
+                                                fontSize:
+                                                    AppConstants.appFontSizeh1,
+                                                fontWeight: FontWeight.normal,
+                                                textColor:
+                                                    AppConstants.appWhiteColor,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    context
+                                                        .read<DataProvider>()
+                                                        .setDataOnKey(
+                                                            'SelectedProviderData',
+                                                            {
+                                                          'name': key,
+                                                          'amount': data[key],
+                                                        });
+                                                    context
+                                                        .read<
+                                                            BreadCrumbsProvider>()
+                                                        .incrementBreadCrumb();
+                                                  });
+                                                },
+                                              ),
+                                              SizedBox(
+                                                height: AppConstants
+                                                    .appPaddingSmall,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: AppConstants.appPaddingSmall,
-                                      ),
-                                      AppButton(
-                                        width: 100.0,
-                                        height: 50.0,
-                                        primaryColor: AppConstants.appGreenColor,
-                                        borderRadius: 5.0,
-                                        text: 'Buy Now',
-                                        fontSize: AppConstants.appFontSizeh1,
-                                        fontWeight: FontWeight.normal,
-                                        textColor: AppConstants.appWhiteColor,
-                                        onPressed: () {},
-                                      ),
-                                      SizedBox(
-                                        height: AppConstants.appPaddingSmall,
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                    ],
+                            ],
+                          );
+                        }
+
+                        return Container();
+                      }
+                    },
                   ),
                 ),
               ),
@@ -328,8 +379,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(AppConstants.appPaddingSmall, 0.0,
-                      0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(
+                      AppConstants.appPaddingSmall, 0.0, 0.0, 0.0),
                   child: Container(
                     color: AppConstants.appMidBlueColor,
                     height: 64.0,
@@ -360,7 +411,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
               )
             ],
           ),
-
 
           // Visa Compliance
           // Second Row
@@ -462,15 +512,14 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             ),
                           ),
                         )
-
                       ],
                     ),
                   ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(AppConstants.appPaddingSmall, 0.0,
-    0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(
+                        AppConstants.appPaddingSmall, 0.0, 0.0, 0.0),
                     child: Column(
                       children: [
                         const SizedBox(
@@ -700,15 +749,14 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             ),
                           ),
                         )
-
                       ],
                     ),
                   ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(AppConstants.appPaddingSmall, 0.0,
-                        0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(
+                        AppConstants.appPaddingSmall, 0.0, 0.0, 0.0),
                     child: Column(
                       children: [
                         const SizedBox(
@@ -757,7 +805,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       color: AppConstants.appGreenColor,
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: AppConstants.appPaddingExtraExtraSmall),
+                                      padding: EdgeInsets.only(
+                                          top: AppConstants
+                                              .appPaddingExtraExtraSmall),
                                       child: Text(
                                         'All Hospitals',
                                         style: TextStyle(
@@ -779,7 +829,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       color: AppConstants.appGreenColor,
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: AppConstants.appPaddingExtraExtraSmall),
+                                      padding: EdgeInsets.only(
+                                          top: AppConstants
+                                              .appPaddingExtraExtraSmall),
                                       child: Text(
                                         'All Hospitals',
                                         style: TextStyle(
@@ -801,7 +853,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       color: AppConstants.appGreenColor,
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: AppConstants.appPaddingExtraExtraSmall),
+                                      padding: EdgeInsets.only(
+                                          top: AppConstants
+                                              .appPaddingExtraExtraSmall),
                                       child: Text(
                                         'Public and Agreement only',
                                         style: TextStyle(
@@ -823,7 +877,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       color: AppConstants.appGreenColor,
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: AppConstants.appPaddingExtraExtraSmall),
+                                      padding: EdgeInsets.only(
+                                          top: AppConstants
+                                              .appPaddingExtraExtraSmall),
                                       child: Text(
                                         'Public and Agreement only',
                                         style: TextStyle(
@@ -845,7 +901,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       color: AppConstants.appGreenColor,
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: AppConstants.appPaddingExtraExtraSmall),
+                                      padding: EdgeInsets.only(
+                                          top: AppConstants
+                                              .appPaddingExtraExtraSmall),
                                       child: Text(
                                         'All Hospitals',
                                         style: TextStyle(
@@ -867,7 +925,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       color: AppConstants.appGreenColor,
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: AppConstants.appPaddingExtraExtraSmall),
+                                      padding: EdgeInsets.only(
+                                          top: AppConstants
+                                              .appPaddingExtraExtraSmall),
                                       child: Text(
                                         'Public and Agreement only',
                                         style: TextStyle(
